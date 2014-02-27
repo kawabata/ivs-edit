@@ -1,0 +1,50 @@
+* IVS Editing Tool for Emacs
+
+This tool provides various IVS (Ideographic Variation Sequence)
+editing tools for Emacs. IVS represents variations of CJK
+Ideogrpaphs. For details, please refer
+UTS#37]].
+
+Data file "IVD_Sequences.txt" is taken from
+http://www.unicode.org/ivd.
+
+** Supported Emacsens
+
+Currenty, Emacs for X-Windows (with `libotf' linked) and Emacs for
+MacOS X (with Yamamoto Mituharu patch) supports IVS. You also need
+fonts that supports IVS.
+
+** Supported Fonts
+
+Most of recent Adobe-Japan1 fonts supports Adobe-Japan1 IVS.
+Hanazono Mincho font supports Hanyo-Denshi IVS.
+
+** Basic setup
+
+: (autoload 'ivs-edit "ivs-edit" nil t) ;; if necessary
+: (global-set-key (kbd "M-J") 'ivs-edit)
+: (setq ivs-edit-preferred-collections '(Adobe-Japan1)) ;; if you only use AJ1.
+
+** Inserting and Checking IVS characters
+
+Executing `M-x ivs-edit' (or pressing `M-J' if configured) on Kanji
+character will show, and replace to, a series of IVS. If executed on
+IVS, the collection name and the ID of IVS will be displayed in
+minibuffer.
+
+** Converting to/from TeX representation of IVS
+
+`ivs-edit-aj1-to-tex-region' and `ivs-edit-tex-to-aj1-region' can
+convert IVS to pLaTeX CID command and vice versa. XeLaTeX supports
+IVS natively.
+
+** Converting Japanese Kanji to Old Style
+
+`ivs-edit-old-style-region' convert Japanese Kanji to its old style
+with Adobe-Japan1 IVS.
+
+** Highlighting non-AJ1 Kanji characters.
+
+`M-x ivs-edit-highlight-non-aj1' highlights non-AJ1 Kanji characters.
+This feature is useful for writing text for e-Book readers which only
+supports AJ1 characters.
