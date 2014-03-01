@@ -1,29 +1,31 @@
 * IVS Editing Tool for Emacs
 
-This tool provides various IVS (Ideographic Variation Sequence)
+This file provides various IVS (Ideographic Variation Sequence)
 editing tools for Emacs. IVS represents variations of CJK
-Ideogrpaphs. For details, please refer
-UTS#37]].
+Ideogrpaphs.  For details, please refer Unicode Technical Standard
+#37 (http://www.unicode.org/reports/tr37/).
 
-Data file "IVD_Sequences.txt" is taken from
-http://www.unicode.org/ivd.
+Data file "IVD_Sequences.txt", integrated into this tool, is
+distributed from http://www.unicode.org/ivd.
 
-** Supported Emacsens
+** Supported Emacsen
 
-Currenty, Emacs for X-Windows (with `libotf' linked) and Emacs for
-MacOS X (with Yamamoto Mituharu patch) supports IVS. You also need
-fonts that supports IVS.
+Currenty, Emacs for X-Windows (with `libotf' linked) and Emacs Mac
+Port (with Yamamoto Mituharu patch, see
+https://github.com/railwaycat/emacs-mac-port for details) supports
+IVS.
 
 ** Supported Fonts
 
-Most of recent Adobe-Japan1 fonts supports Adobe-Japan1 IVS.
-Hanazono Mincho font supports Hanyo-Denshi IVS.
+Most of recent Adobe-Japan1 fonts support `Adobe-Japan1' IVD
+collection. Hanazono Mincho (http://fonts.jp/hanazono/) supports
+`Hanyo-Denshi' IVD collection.
 
 ** Basic setup
 
 : (autoload 'ivs-edit "ivs-edit" nil t) ;; if necessary
 : (global-set-key (kbd "M-J") 'ivs-edit)
-: (setq ivs-edit-preferred-collections '(Adobe-Japan1)) ;; if you only use AJ1.
+: (setq ivs-edit-preferred-collections '(Adobe-Japan1)) ; if you only use Adobe-Japan1 IVD.
 
 ** Inserting and Checking IVS characters
 
@@ -47,4 +49,4 @@ with Adobe-Japan1 IVS.
 
 `M-x ivs-edit-highlight-non-aj1' highlights non-AJ1 Kanji characters.
 This feature is useful for writing text for e-Book readers which only
-supports AJ1 characters.
+supports Adobe-Japan1 characters.

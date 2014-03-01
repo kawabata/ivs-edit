@@ -1,6 +1,7 @@
 # Typical Old-Style IVS from JIS X 0213:2000/2004 characters
 #
 # organized by: Taichi Kawabata
+#
 # 1st column :: Japanese simplified character (non Joyo-Kanji included.  IVS may be used)
 # 2nd column :: old character (IVS may be used when appropriate)
 # 3rd column :: compatibility character
@@ -8,7 +9,16 @@
 #
 # ★は常用漢字でかつ「旧字・旧かな入門」に記載がない文字
 # ☆は「旧字・旧かな入門」に掲載されつつもAJ16にもHDにもない文字
-# 参考文献：「旧字・旧かな入門」、その他
+#
+# 参考資料
+# - 府川・小池「旧字旧かな入門」（柏書房）
+# - 常用漢字表
+# - 印刷標準字体表
+# - JIS X 0208:1997 規格表 (入れ替え・追加22文字等）
+# - JIS X 0213:2004 規格表
+# - Adobe GSUB テーブル (trad 等)
+# - Adobe cid2code.txt
+# - 斎藤修三郎 「青空パッケージ」（LaTeX2e的）
 #
 亜󠄀	亞󠄀
 唖󠄀	啞󠄀
