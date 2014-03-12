@@ -2,12 +2,12 @@
 
 ;; Author: KAWABATA, Taichi <kawabata.taichi_at_gmail.com>
 ;; Description: Tools for Editing Ideographic Variation Sequences
-;; Package-Requires: ((emacs "24.3"))
+;; Package-Requires: ((emacs "24.3") (dash "2.6.0"))
 ;; Created: 2014-01-01
 ;; Keywords: text
 ;; Namespace: ivs-edit-
 ;; Human-Keywords: Ideographic Variation Sequence
-;; Version: 1.140228
+;; Version: 1.140305
 ;; URL: http://github.com/kawabata/ivs-edit
 
 ;;; Commentary:
@@ -26,7 +26,7 @@
 ;;
 ;; Currenty, Emacs for X-Windows (with `libotf' linked) and Emacs Mac
 ;; Port (with Yamamoto Mituharu patch, see
-;; https://github.com/railwaycat/emacs-mac-port for details) supports
+;; https://github.com/railwaycat/emacs-mac-port for details) support
 ;; IVS.
 ;;
 ;; ** Supported Fonts
@@ -37,16 +37,16 @@
 ;;
 ;; ** Basic setup
 ;;
-;; : (autoload 'ivs-edit "ivs-edit" nil t) ;; if necessary
-;; : (global-set-key (kbd "M-J") 'ivs-edit)
+;; : (autoload 'ivs-edit "ivs-edit" nil t)                 ; if necessary
+;; : (global-set-key (kbd "M-J") 'ivs-edit)                ; sample keybinding
 ;; : (setq ivs-edit-preferred-collections '(Adobe-Japan1)) ; if you only use Adobe-Japan1 IVD.
 ;;
 ;; ** Inserting and Checking IVS characters
 ;;
-;; Executing `M-x ivs-edit' (or pressing `M-J' if configured) on Kanji
-;; character will show, and replace to, a series of IVS. If executed on
-;; IVS, the collection name and the ID of IVS will be displayed in
-;; minibuffer.
+;; Executing `M-x ivs-edit' (or pressing `M-J' if configured as above)
+;; on Kanji character will show, and replace to, a series of IVS. If
+;; executed on IVS, the collection name and the ID of IVS will be
+;; displayed in minibuffer.
 ;;
 ;; ** Converting to/from TeX representation of IVS
 ;;
@@ -66,6 +66,8 @@
 ;; supports Adobe-Japan1 characters.
 
 ;;; Code:
+
+(require 'dash)
 
 (defgroup ivs-edit nil
   "IVS (Ideographic Variation Sequence) editing tool."
@@ -141,16 +143,20 @@
 (defun ivs-edit ()
   "Insert and Verify IVS after the current point."
   (interactive)
-  (let* ((char  (char-after (point)))
-         (vs    (char-after (1+ (point))))
-         (entry (gethash char ivs-edit-table))
-         (item  (assq vs entry)))
+  (let* ((char    (char-after (point)))
+         (vs      (char-after (1+ (point))))
+         (entry   (gethash char ivs-edit-table))
+         (matches (--filter (eq vs (car it)) entry)))
     (when entry
-      (if item (message "collection=%s name=%s" (cadr item) (caddr item))
+      (if matches
+          (message "%s"
+                   (mapconcat (lambda (x)
+                                (format "collection=%s name=%s"
+                                        (cadr x) (caddr x))) matches ", "))
         (let ((seq-list
                (mapcar
                 (lambda (collection)
-                  (let ((items (cl-remove-if-not (lambda (x) (equal (cadr x) collection)) entry)))
+                  (let ((items (--filter (equal (cadr it) collection) entry)))
                     (mapcar 'car items)))
                 ivs-edit-preferred-collections)))
           (delete-char 1)
