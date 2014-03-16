@@ -7,7 +7,7 @@
 ;; Keywords: text
 ;; Namespace: ivs-edit-
 ;; Human-Keywords: Ideographic Variation Sequence
-;; Version: 1.140305
+;; Version: 1.140316
 ;; URL: http://github.com/kawabata/ivs-edit
 
 ;;; Commentary:
@@ -122,8 +122,8 @@
             (let* ((char (string-to-char (match-string 1)))
                    (ivs  (match-string 2) ))
               (ids-edit-addhash char ivs table))))
-        table)
-    "IVS old-style char table."))
+        table))
+    "IVS old-style char table.")
 
 (defvar ivs-edit-cid-table
   (eval-when-compile
