@@ -2,12 +2,12 @@
 
 ;; Author: KAWABATA, Taichi <kawabata.taichi_at_gmail.com>
 ;; Description: Tools for Editing Ideographic Variation Sequences
-;; Package-Requires: ((emacs "24.3") (dash "2.6.0"))
+;; Package-Requires: ((emacs "24.3") (dash "2.6.0") (cl-lib "1.0"))
 ;; Created: 2014-01-01
 ;; Keywords: text
 ;; Namespace: ivs-edit-
 ;; Human-Keywords: Ideographic Variation Sequence
-;; Version: 1.140316
+;; Version: 1.140319
 ;; URL: http://github.com/kawabata/ivs-edit
 
 ;;; Commentary:
@@ -68,6 +68,7 @@
 ;;; Code:
 
 (require 'dash)
+(require 'cl-lib)
 
 (defgroup ivs-edit nil
   "IVS (Ideographic Variation Sequence) editing tool."
