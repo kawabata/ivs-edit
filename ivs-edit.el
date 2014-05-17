@@ -7,7 +7,7 @@
 ;; Keywords: text
 ;; Namespace: ivs-edit-
 ;; Human-Keywords: Ideographic Variation Sequence
-;; Version: 1.140319
+;; Version: 1.140517
 ;; URL: http://github.com/kawabata/ivs-edit
 
 ;;; Commentary:
@@ -33,7 +33,8 @@
 ;;
 ;; Most of recent Adobe-Japan1 fonts support `Adobe-Japan1' IVD
 ;; collection. Hanazono Mincho (http://fonts.jp/hanazono/) supports
-;; `Hanyo-Denshi' IVD collection.
+;; `Hanyo-Denshi' IVD collection. `Moji_Joho' collection shares some
+;; sequences with `Hanyo-Denshi' collection.
 ;;
 ;; ** Basic setup
 ;;
@@ -75,7 +76,7 @@
   :prefix "ivs-edit-"
   :group 'text)
 
-(defcustom ivs-edit-preferred-collections '(Adobe-Japan1 Hanyo-Denshi)
+(defcustom ivs-edit-preferred-collections '(Adobe-Japan1 Hanyo-Denshi Moji_Joho)
   "List and order of preferred collection for IVS editing."
   :type '(symbol)
   :group 'ivs-edit)
