@@ -7,7 +7,7 @@
 ;; Keywords: text
 ;; Namespace: ivs-edit-
 ;; Human-Keywords: Ideographic Variation Sequence
-;; Version: 1.140517
+;; Version: 1.140720
 ;; URL: http://github.com/kawabata/ivs-edit
 
 ;;; Commentary:
@@ -134,7 +134,7 @@
        (lambda (char entry)
          (dolist (item entry)
            (when (equal (cadr item) 'Adobe-Japan1)
-             (let ((cid (string-to-number (substring (caddr item) 4))))
+             (let ((cid (string-to-number (substring (cl-caddr item) 4))))
                (unless (gethash cid table)
                  (puthash cid (string char (car item)) table))))))
        ivs-edit-table)
@@ -154,7 +154,7 @@
           (message "%s"
                    (mapconcat (lambda (x)
                                 (format "collection=%s name=%s"
-                                        (cadr x) (caddr x))) matches ", "))
+                                        (cadr x) (cl-caddr x))) matches ", "))
         (let ((seq-list
                (mapcar
                 (lambda (collection)
@@ -180,7 +180,7 @@
         (let* ((entry (gethash (string-to-char (match-string 1)) ivs-edit-table))
                (item  (assq (string-to-char (match-string 2)) entry))
                (collection (cadr item))
-               (name  (caddr item)))
+               (name  (cl-caddr item)))
           (when (equal collection 'Adobe-Japan1)
             (replace-match (format "\\\\CID{%s}" (substring name 4)))))))))
 
