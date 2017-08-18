@@ -7,8 +7,21 @@
 ;; Keywords: text
 ;; Namespace: ivs-edit-
 ;; Human-Keywords: Ideographic Variation Sequence
-;; Version: 1.140720
+;; Version: 1.170817
 ;; URL: http://github.com/kawabata/ivs-edit
+
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
 ;;
@@ -81,16 +94,8 @@
   :type '(symbol)
   :group 'ivs-edit)
 
-(eval-and-compile
-(defun ids-edit-addhash (key value table)
-  "Add to KEY a VALUE in table TABLE."
-  (let* ((old-value (gethash key table)))
-    (if old-value (nconc old-value (list value))
-      (puthash key (list value) table)))))
-
-(eval-and-compile
-(defvar ivs-edit-table
-  (eval-when-compile
+(eval-when-compile
+  (defvar ivs-edit--table
     (let* ((directory (file-name-directory (or byte-compile-current-file
                                                load-file-name
                                                buffer-file-name)))
@@ -105,9 +110,10 @@
                  (vs (string-to-number (match-string 2) 16))
                  (collection (intern (match-string 3)))
                  (name (match-string 4)))
-            (ids-edit-addhash char (list vs collection name) table))))
-      table))
-  "IVS table."))
+            (cl-pushnew (list vs collection name) (gethash char table)))))
+      table)))
+
+(defvar ivs-edit-table (eval-when-compile ivs-edit--table))
 
 (defvar ivs-edit-old-table
   (eval-when-compile
@@ -123,7 +129,7 @@
                   "^\\(.\\)[󠄀-󠇯]?	\\(\\cC[󠄀-󠇯]?\\)" nil t)
             (let* ((char (string-to-char (match-string 1)))
                    (ivs  (match-string 2) ))
-              (ids-edit-addhash char ivs table))))
+              (cl-pushnew ivs (gethash char table)))))
         table))
     "IVS old-style char table.")
 
@@ -137,7 +143,7 @@
              (let ((cid (string-to-number (substring (cl-caddr item) 4))))
                (unless (gethash cid table)
                  (puthash cid (string char (car item)) table))))))
-       ivs-edit-table)
+       ivs-edit--table)
       table))
   "IVS CID table.")
 
